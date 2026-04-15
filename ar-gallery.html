@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keeladi Museum - Interactive 3D Viewer</title>
+
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #e67e22;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-nav {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .back-btn:hover {
+            color: var(--accent-color);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        /* The 3D Viewer Canvas */
+        model-viewer {
+            width: 100%;
+            max-width: 800px;
+            height: 60vh;
+            min-height: 400px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        /* The AR Button inside the viewer */
+        .ar-button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(230, 126, 34, 0.4);
+            transition: background-color 0.3s;
+        }
+
+        .ar-button:hover {
+            background-color: #d35400;
+        }
+
+        /* The Selection Menu */
+        .gallery-menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            max-width: 800px;
+        }
+
+        .artifact-btn {
+            background-color: white;
+            border: 2px solid #ddd;
+            color: var(--primary-color);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .artifact-btn:hover {
+            border-color: var(--primary-color);
+            background-color: #f1f2f6;
+        }
+
+        .artifact-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header-nav">
+        <a href="index.html" class="back-btn">← Back to Gallery</a>
+        <h1>Interactive Viewer</h1>
+        <div style="width: 100px;"></div>
+    </div>
+
+    <model-viewer id="main-viewer" src="models/Bangle.glb" alt="A 3D model of an archaeological artifact" ar
+        ar-modes="webxr scene-viewer quick-look" camera-controls auto-rotate shadow-intensity="1.5">
+
+        <button slot="ar-button" class="ar-button">View in AR</button>
+    </model-viewer>
+
+    <div class="gallery-menu">
+        <button class="artifact-btn active" onclick="switchModel('Bangle', this)">Bangle</button>
+        <button class="artifact-btn" onclick="switchModel('bracelet', this)">Bracelet</button>
+        <button class="artifact-btn" onclick="switchModel('ceramicpot', this)">Ceramic Pot</button>
+        <button class="artifact-btn" onclick="switchModel('Halfpot', this)">Half Pot</button>
+        <button class="artifact-btn" onclick="switchModel('kalvettu', this)">Kalvettu</button>
+        <button class="artifact-btn" onclick="switchModel('ring', this)">Ring</button>
+        <button class="artifact-btn" onclick="switchModel('statue', this)">Statue</button>
+    </div>
+
+    <script>
+        // 1. Function to switch the model when a bottom menu button is clicked
+        function switchModel(fileName, clickedButton) {
+            const viewer = document.getElementById('main-viewer');
+            viewer.src = 'models/' + fileName + '.glb';
+
+            const buttons = document.querySelectorAll('.artifact-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            clickedButton.classList.add('active');
+        }
+
+        // 2. Function to load the correct model when arriving from the index.html page
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const requestedModel = urlParams.get('model');
+
+            if (requestedModel) {
+                // Change the 3D model source
+                const viewer = document.getElementById('main-viewer');
+                viewer.src = 'models/' + requestedModel + '.glb';
+
+                // Highlight the correct button in the bottom menu
+                const buttons = document.querySelectorAll('.artifact-btn');
+                buttons.forEach(btn => {
+                    btn.classList.remove('active');
+                    // Check if the button's onclick attribute contains the model name
+                    if (btn.getAttribute('onclick').includes("'" + requestedModel + "'")) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>
