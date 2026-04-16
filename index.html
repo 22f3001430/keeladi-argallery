@@ -8,10 +8,19 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
+            background: linear-gradient(45deg, #2c3e50, #e67e22, #d35400);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite; /* slowly animates the colors */
             margin: 0;
             padding: 40px 20px;
-            color: #333;
+            color: white; /* Make overall text white */
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .header {
@@ -39,12 +48,16 @@
             margin: 0 auto;
         }
 
-        /* Individual Card Styling */
         .card {
-            background: white;
+            /* Semi-transparent white background */
+            background: rgba(255, 255, 255, 0.85);
+            /* Adds the blur effect behind the card */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
