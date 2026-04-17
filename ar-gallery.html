@@ -16,22 +16,51 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
             margin: 0;
-            padding: 20px;
+            /* Matches the index page padding to remove top gap */
+            padding: 0 20px 40px 20px; 
+            color: #333;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
         }
 
+        /* Matches the blurred background image from the index page */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/bg.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3; /* Adjust this if you want it darker/lighter */
+            filter: blur(8px);
+            z-index: -1;
+        }
+
+        /* Frosted Glass Header matching the index page */
         .header-nav {
             width: 100%;
-            max-width: 800px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 20px 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            box-sizing: border-box;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
         }
 
         .back-btn {
@@ -41,16 +70,23 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            font-size: 1.1em;
+            transition: color 0.2s;
         }
 
         .back-btn:hover {
             color: var(--accent-color);
         }
 
+        /* Header typography matching the index page */
         h1 {
             color: var(--primary-color);
             margin: 0;
-            font-size: 1.5em;
+            font-size: 1.8em;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
         }
 
         /* The 3D Viewer Canvas */
@@ -60,8 +96,8 @@
             height: 60vh;
             min-height: 400px;
             background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             margin-bottom: 30px;
         }
 
@@ -71,50 +107,55 @@
             color: white;
             border: none;
             padding: 12px 24px;
-            border-radius: 8px;
+            border-radius: 30px;
             position: absolute;
             bottom: 20px;
             right: 20px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(230, 126, 34, 0.4);
-            transition: background-color 0.3s;
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.4);
+            transition: background-color 0.3s, transform 0.2s;
         }
 
         .ar-button:hover {
             background-color: #d35400;
+            transform: translateY(-2px);
         }
 
         /* The Selection Menu */
         .gallery-menu {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
             justify-content: center;
             max-width: 800px;
         }
 
         .artifact-btn {
-            background-color: white;
-            border: 2px solid #ddd;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            border: 2px solid white;
             color: var(--primary-color);
             padding: 10px 20px;
             border-radius: 30px;
             font-size: 16px;
             cursor: pointer;
             transition: all 0.2s ease;
-            font-weight: 500;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
 
         .artifact-btn:hover {
             border-color: var(--primary-color);
-            background-color: #f1f2f6;
+            background-color: white;
+            transform: translateY(-2px);
         }
 
         .artifact-btn.active {
             background-color: var(--primary-color);
             color: white;
             border-color: var(--primary-color);
+            box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);
         }
     </style>
 </head>
@@ -122,10 +163,9 @@
 <body>
 
     <div class="header-nav">
-        <a href="index.html" class="back-btn">← Back to Gallery</a>
+        <a href="index.html" class="back-btn">← Back</a>
         <h1>Interactive Viewer</h1>
-        <div style="width: 100px;"></div>
-    </div>
+        <div style="width: 70px;"></div> </div>
 
     <model-viewer id="main-viewer" src="models/Bangle.glb" alt="A 3D model of an archaeological artifact" ar
         ar-modes="webxr scene-viewer quick-look" camera-controls auto-rotate shadow-intensity="1.5">
