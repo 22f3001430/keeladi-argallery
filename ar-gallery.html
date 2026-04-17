@@ -18,7 +18,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             /* Matches the index page padding to remove top gap */
-            padding: 0 20px 40px 20px; 
+            padding: 0 20px 40px 20px;
             color: #333;
             min-height: 100vh;
             display: flex;
@@ -38,7 +38,8 @@
             background-image: url('images/bg.jpg');
             background-size: cover;
             background-position: center;
-            opacity: 0.3; /* Adjust this if you want it darker/lighter */
+            opacity: 0.3;
+            /* Adjust this if you want it darker/lighter */
             filter: blur(8px);
             z-index: -1;
         }
@@ -165,7 +166,8 @@
     <div class="header-nav">
         <a href="index.html" class="back-btn">← Back</a>
         <h1>Interactive Viewer</h1>
-        <div style="width: 70px;"></div> </div>
+        <div style="width: 70px;"></div>
+    </div>
 
     <model-viewer id="main-viewer" src="models/Bangle.glb" alt="A 3D model of an archaeological artifact" ar
         ar-modes="webxr scene-viewer quick-look" camera-controls auto-rotate shadow-intensity="1.5">
@@ -175,12 +177,12 @@
 
     <div class="gallery-menu">
         <button class="artifact-btn active" onclick="switchModel('Bangle', this)">Bangle</button>
-        <button class="artifact-btn" onclick="switchModel('bracelet', this)">Bracelet</button>
+        <button class="artifact-btn" onclick="switchModel('bracelet', this)">Agate Beads</button>
         <button class="artifact-btn" onclick="switchModel('ceramicpot', this)">Ceramic Pot</button>
-        <button class="artifact-btn" onclick="switchModel('Halfpot', this)">Half Pot</button>
-        <button class="artifact-btn" onclick="switchModel('kalvettu', this)">Kalvettu</button>
-        <button class="artifact-btn" onclick="switchModel('ring', this)">Ring</button>
-        <button class="artifact-btn" onclick="switchModel('statue', this)">Statue</button>
+        <button class="artifact-btn" onclick="switchModel('Halfpot', this)">Red Slipped Storage Jar</button>
+        <button class="artifact-btn" onclick="switchModel('kalvettu', this)">Thathapatti Memorial Stone</button>
+        <button class="artifact-btn" onclick="switchModel('ring', this)">Carnelian Beads</button>
+        <button class="artifact-btn" onclick="switchModel('statue', this)">Glass Beads Necklace</button>
     </div>
 
     <script>
